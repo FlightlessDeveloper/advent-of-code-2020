@@ -1,1 +1,1 @@
-argparse=3.8.6
+argparse==3.8.6
