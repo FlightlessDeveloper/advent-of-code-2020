@@ -26,14 +26,16 @@ def parse_input():
     return tree_map
 
 
-def get_path_for_slope(tree_map, slope, x_pos=0):
-    if len(tree_map) < 1:
-        return []
-    else:
-        first_row = tree_map[0]
-        x_pos_bounded = x_pos % len(first_row)
-        # Note: This still works if slope.y is bigger than len(tree_map)
-        return [first_row[x_pos_bounded]] + get_path_for_slope(tree_map[slope.y:], slope, x_pos + slope.x)
+def get_path_for_slope(tree_map, slope, start_point=MapVector(0, 0)):
+    x = start_point.x
+    y = start_point.y
+    slope_path = []
+    while y < len(tree_map):
+        x = x % len(tree_map[y])
+        slope_path.append(tree_map[y][x])
+        y = y + slope.y
+        x = x + slope.x
+    return slope_path
 
 
 def mapVectorToString(v):
