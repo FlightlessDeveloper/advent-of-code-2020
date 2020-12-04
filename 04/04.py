@@ -1,5 +1,4 @@
 import argparse
-from collections import namedtuple
 
 
 MANDATORY_PASSPORT_FIELDS = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
@@ -47,13 +46,15 @@ def check_passport_fields_present(passport):
     for f in MANDATORY_PASSPORT_FIELDS:
         if f not in passport:
             return False
+    for k in passport:
+        if k not in MANDATORY_PASSPORT_FIELDS and k not in OPTIONAL_PASSPORT_FIELDS:
+            return False
     return True
 
 
 def check_passport_fields_present_and_valid(passport):
-    for f in MANDATORY_PASSPORT_FIELDS:
-        if f not in passport:
-            return False
+    if not check_passport_fields_present(passport):
+        return False
     if not 1920 <= int(passport["byr"]) <= 2002:
         return False
     if not 2010 <= int(passport["iyr"]) <= 2020:
@@ -72,11 +73,11 @@ def check_passport_fields_present_and_valid(passport):
 
 
 def check_valid_height(s):
-    units = s[-2:]
+    unit = s[-2:]
     value = int(s[:-2])
-    if units == "cm":
+    if unit == "cm":
         return 150 <= value <= 193
-    elif units == "in":
+    elif unit == "in":
         return 59 <= value <= 76
     else:
         return False
