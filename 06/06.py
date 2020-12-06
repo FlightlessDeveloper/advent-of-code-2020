@@ -5,8 +5,10 @@ def main():
     answers = parse_args()
 
     # Part One
-    answers_counts_total = sum(len(x) for x in answers)
-    print(f"Total: {answers_counts_total}")
+    print(f"Total: {sum(len(x[0]) for x in answers)}")
+
+    # Part Two
+    print(f"Total: {sum(len(x[1]) for x in answers)}")
 
 
 def parse_args():
@@ -17,16 +19,19 @@ def parse_args():
 
 
 def parse_answers(lines):
-    current_answer_set = set()
+    answer_set_part_one = set()
+    answer_set_part_two = set("abcdefghijklmnopqrstuvwxyz")
     answer_sets = []
     for l in lines:
         if len(l) >= 1:
-            for c in l:
-                current_answer_set.add(c)
+            next_set = set(c for c in l)
+            answer_set_part_one = answer_set_part_one.union(next_set)
+            answer_set_part_two = answer_set_part_two.intersection(next_set)
         else:
-            answer_sets.append(current_answer_set)
-            current_answer_set = set()
-    answer_sets.append(current_answer_set)
+            answer_sets.append((answer_set_part_one, answer_set_part_two))
+            answer_set_part_one = set()
+            answer_set_part_two = set("abcdefghijklmnopqrstuvwxyz")
+    answer_sets.append((answer_set_part_one, answer_set_part_two))
     return answer_sets
 
 
