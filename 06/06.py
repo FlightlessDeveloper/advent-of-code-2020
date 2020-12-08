@@ -4,10 +4,10 @@ import argparse
 def main():
     answers = parse_args()
 
-    # Part One
+    # Part 1
     print(f"Total: {sum(len(x[0]) for x in answers)}")
 
-    # Part Two
+    # Part 2
     print(f"Total: {sum(len(x[1]) for x in answers)}")
 
 
