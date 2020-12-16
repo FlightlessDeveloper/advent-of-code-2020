@@ -36,8 +36,8 @@ def play_memory_game(starting_numbers, num_total_turns=None):
             next_number = turn_number - last_time_spoken[next_number] if next_number in last_time_spoken else 0
         last_time_spoken[previous_number] = turn_number
         turn_number += 1
-        if num_total_turns is not None and turn_number % (num_total_turns / 10) == 0:
-            print(f"{100 * turn_number // num_total_turns}% complete", end='\n' if turn_number == num_total_turns else '\r')
+        if num_total_turns is not None and turn_number % (num_total_turns / 100) == 0:
+            print(f"\rCalculating: {100 * turn_number // num_total_turns}%", end='\n' if turn_number == num_total_turns else '')
 
 
 if __name__ == "__main__":
